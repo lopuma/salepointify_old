@@ -1,0 +1,33 @@
+{
+    "name": "client",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev": "next dev --turbo",
+        "build": "next build",
+        "start": "next start",
+        "lint": "next lint"
+    },
+    "proxy": "http://localhost:3001",
+    "dependencies": {
+        "autoprefixer": "10.4.14",
+        "axios": "1.4.0",
+        "dotenv": "16.3.1",
+        "next": "13.4.6",
+        "postcss": "8.4.24",
+        "react": "18.2.0",
+        "react-dom": "18.2.0",
+        "react-icons": "4.9.0",
+        "react-loader-spinner": "5.3.4",
+        "tailwindcss": "3.3.2"
+    },
+    "devDependencies": {
+        "standard": "^17.0.0"
+    },
+    "eslintConfig": {
+        "extends": [
+            "./node_modules/standard/eslintrc.json",
+            "next/core-web-vitals"
+        ]
+    }
+}
