@@ -1,21 +1,18 @@
-const chalk = require('chalk');
+import pkg from 'chalk';
+const { green, yellow, red, magenta } = pkg;
 
-class _log {
-  static ready(text) {
-    console.info('- ' + chalk.green('ready'), text);
-  }
-
-  static warn(text) {
-    console.warn('- ' + chalk.yellow('warn'), text);
-  }
-
-  static error(text) {
-    console.error('- ' + chalk.red('error'), text);
-  }
-
-  static debug(text) {
-    console.log('- ' + chalk.magenta('debug'), text);
-  }
+export function ready(text) {
+    console.info("- " + green("ready"), text);
 }
 
-module.exports = _log;
+export function warn(text) {
+    console.warn("- " + yellow("warn"), text);
+}
+
+export function error(text) {
+    console.error("- " + red("error"), text);
+}
+
+export function debug(text) {
+    console.log("- " + magenta("debug"), text);
+}

@@ -6,6 +6,8 @@ import config from "@/app/config";
 import CompanyContext from "./CompanyContext";
 import CompanyReducer from "./CompanyReducer";
 const API_BASE_URL = config.API_BASE_URL
+const companyUrl = `${API_BASE_URL}/company`;
+
 const CompanyProvider = ({ children }) => {
 	const initialData = [
 		{   
@@ -49,10 +51,10 @@ const CompanyProvider = ({ children }) => {
 
 	const getData = async () => {
 		try {
-			const isAvailable = await checkUrlAvailability(API_BASE_URL);
+			const isAvailable = await checkUrlAvailability(companyUrl);
 
 			if (isAvailable) {
-				const res = await axios.get(API_BASE_URL);
+				const res = await axios.get(companyUrl);
 				if (res.status === 200) {
 					const data = res.data;
 					if (Array.isArray(data) && data.length > 0) {
@@ -80,7 +82,7 @@ const CompanyProvider = ({ children }) => {
 
 	const postData = async (data) => {
 		axios
-			.post(API_BASE_URL, data)
+			.post(companyUrl, data)
 			.then(function (response) {
 				console.info(response);
 			})

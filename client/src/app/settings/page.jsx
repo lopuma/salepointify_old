@@ -247,7 +247,7 @@ const FormSettings = () => {
 								<Button text="Submitting" loader=<LoaderOval type="button" /> />
 							) : (
 								<div className="flex gap-4">
-									<Button text="Submit" />
+									<Button text="Submit" type="submit"/>
 									<Button text="Cancel" type="button" className="bg-red-600 text-white" onClick={handleCancel} />
 								</div>
 							)
