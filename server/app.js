@@ -4,8 +4,9 @@ import { ready, warn } from "./utils.js";
 import { PORT as _PORT } from "./config.js";
 import cors from "cors";
 import configCors from "./configCors.js";
-import * as routerCompany from "./routes/api/company/Company.router.api.js";
-import * as locations from "./routes/api/locations/Location.router.api.js"
+import routerCompany from "./routes/api/company/Company.router.api.js";
+import routerProvinces from "./routes/api/locations/Provinces.router.api.js";
+import routerPopulations from "./routes/api/locations/Populations.router.api.js";
 const PORT = _PORT;
 
 const app = express();
@@ -20,9 +21,9 @@ app.use(morgan("dev"));
 app.use(json());
 
 // 4 - Router
-app.use("/api/company", routerCompany.getCompany);
-app.use("/api/company", routerCompany.createCompany);
-app.use("/api/locations",locations.getProvince)
+app.use("/api/company", routerCompany);
+app.use("/api/locations/provinces", routerProvinces);
+app.use("/api/locations/populations", routerPopulations);
 
 app.post("/api", (req, res) => {
 	const { firstName, lastName, companyName } = req.body;

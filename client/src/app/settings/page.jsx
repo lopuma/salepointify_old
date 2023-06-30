@@ -8,14 +8,24 @@ import { LoaderOval } from "../../components/Loaders/page";
 import Backdrop from "@/components/Backdrop/page";
 import ErrorComponent from "@/components/Form/ErrorComponent/page";
 import useForms from "../hooks/useForms";
+import usePopulation from "../hooks/usePopulations";
 
 const FormSettings = () => {
 	const { companyData, error, postData } = useCompany();
+	const { dataProvinces, getPopulations } = usePopulation();
 	const [editMode, setEditMode] = useState(false);
-
-	const DetailView = ({ data }) => {
+	const colors = {
+		color: "red",
+	};
+	const DetailView = ({ data, dataProvinces }) => {
 		const { companyName, firstName, lastName, CIF, industry, founded, employees, website, description, locations } =
 			data[0];
+		const [isDataProvinces, setIsDataProvinces] = useState(dataProvinces);
+
+		useEffect(() => {
+			setIsDataProvinces(dataProvinces);
+		}, []);
+
 		const [isSubmitting, setIsSubmitting] = useState(false);
 		const [isErrors, setIsErrors] = useState({});
 		const [formData, setFormData] = useState({
@@ -83,7 +93,6 @@ const FormSettings = () => {
 				setIsErrors(allErrors);
 			} else {
 				const data = valuesAllInputs();
-				console.log({ data });
 				setIsSubmitting(true);
 				setTimeout(() => {
 					postData(data);
@@ -118,6 +127,12 @@ const FormSettings = () => {
 				[fieldName]: required,
 			}));
 		}, []);
+
+		const handleOnChangeSelect = async (e) => {
+			e.preventDefault();
+			const parent_code = e.target.value;
+			getPopulations(parent_code);
+		};
 
 		return (
 			<form onSubmit={handleSubmit}>
@@ -206,7 +221,7 @@ const FormSettings = () => {
 								className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
 								htmlFor="grid-state"
 							>
-								State
+								State / Provinces
 							</label>
 							<div className="relative">
 								<select
@@ -214,13 +229,26 @@ const FormSettings = () => {
 										editMode ? "bg-whiteb" : "bg-gray-200"
 									} border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500`}
 									id="grid-state"
+									onChange={(e) => handleOnChangeSelect(e)}
 								>
-									<option>New Mexico</option>
+									{isDataProvinces.map(({ label, code }) => {
+										return (
+											<option key={code} value={code}>
+												{label}
+											</option>
+										);
+									})}
+									{/* <option>New Mexico</option>
 									<option>Missouri</option>
-									<option>Texas</option>
+									<option>Texas</option> */}
 								</select>
 								<div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-									<svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+									<svg
+										className="fill-current h-4 w-4"
+										xmlns="http://www.w3.org/2000/svg"
+										viewBox="0 0 20 20"
+										style={colors}
+									>
 										<path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
 									</svg>
 								</div>
@@ -247,7 +275,7 @@ const FormSettings = () => {
 								<Button text="Submitting" loader=<LoaderOval type="button" /> />
 							) : (
 								<div className="flex gap-4">
-									<Button text="Submit" type="submit"/>
+									<Button text="Submit" type="submit" />
 									<Button text="Cancel" type="button" className="bg-red-600 text-white" onClick={handleCancel} />
 								</div>
 							)
@@ -262,7 +290,7 @@ const FormSettings = () => {
 	};
 
 	if (!error) {
-		return <DetailView data={companyData} />;
+		return <DetailView data={companyData} dataProvinces={dataProvinces} />;
 	} else {
 		return (
 			<section className="px-4 bg-white">
