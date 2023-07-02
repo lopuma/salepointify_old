@@ -1,37 +1,35 @@
-"use client";
 import ToggleButton from "@/components/Header/ToggleMenu/page";
 import useHeader from "@/app/hooks/useHeader";
 import logoSettings from "@/assets/settings.svg";
 import ItemsNavbar from "../ItemsNavbar/page";
-
-const links = [
-	{
-		ID: "M001",
-		text: "Home",
-		href: "/",
-		icon: null,
-		extra: null,
-	},
-	{
-		ID: "M002",
-		text: "Settings",
-		href: "/settings",
-		icon: logoSettings,
-		extra: null,
-	},
-];
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
 	const { showNav } = useHeader();
+	const pathname = usePathname();
+	const routes = [
+		{
+			label: "Home",
+			href: "/",
+			icon: null,
+			active: pathname === "/",
+		},
+		{
+			label: "Settings",
+			href: "/settings",
+			icon: logoSettings,
+			active: pathname === "/settings",
+		},
+	];
 	return (
-		<nav>
+		<nav className="sm:w-7/12 h-[60px] px-2 flex items-center bg-yellow-400">
 			<ul
 				className={`${
-					showNav ? "flex gap-8 bg-aside" : "hidden"
-				} transition-all duration-300 rounded-sm absolute sm:static top-[80px] left-0 h-screen  w-9/12 sm:w-[438px] sm:h-[62px] flex flex-col sm:flex sm:flex-row place-content-start sm:place-content-end sm:gap-4 text-[20px] sm:text-[18px] lg:w-[638px] items-center dark:bg-gray-700 py-4 px-2`}
+					showNav ? "bg-aside absolute top-[80px] left-0 h-screen w-9/12 " : "hidden"
+				} sm:flex gap-4 text-[20px] sm:text-[18px] bg-emerald-400 sm:w-full sm:h-full px-2 items-center place-content-end`}
 			>
-				{links.map((link) => (
-					<ItemsNavbar key={link.ID} {...link} />
+				{routes.map((route) => (
+					<ItemsNavbar key={route.href} {...route} />
 				))}
 			</ul>
 			<ToggleButton />

@@ -1,15 +1,12 @@
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 
-const LinkSidebar = ({ href, className, ariaCurrent, icon, show, extra, title }) => {
-	const router = usePathname();
+const LinkSidebar = ({ href, className, ariaCurrent, icon, show, extra, label, active }) => {
 	return (
 		<Link href={href} as={href} className={className} aria-current={ariaCurrent ? `${ariaCurrent}` : null}>
+			<div className={active ? "text-red-400 font-semibold" : ""}>{icon}</div>
 
-			<div className={router === href ? "text-red-400 font-semibold" : ""}>{icon}</div>
-
-			<label className={`${!show && "hidden"} origin-left duration-200 ${router === href ? 'text-red-400 font-semibold' : ""}`}>
-				{title}
+			<label className={`${!show && "hidden"} origin-left duration-200 ${active ? "text-red-400 font-semibold" : ""}`}>
+				{label}
 			</label>
 
 			{extra ? (

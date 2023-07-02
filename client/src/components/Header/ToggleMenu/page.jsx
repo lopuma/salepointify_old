@@ -3,7 +3,7 @@ const ToggleButton = () => {
 	const { showToggle, showMenuBackdrop } = useHeader();
 	return (
 		<div
-			className={`cursor-pointer sm:hidden rounded border border-aside bg-white hover:border-black hover:text-black`}
+			className={`cursor-pointer sm:hidden rounded-md border border-aside bg-white text-black hover:border-black hover:text-black`}
 		>
 			<button
 				id="toggleSidebarMobile"

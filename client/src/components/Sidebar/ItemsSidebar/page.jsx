@@ -1,7 +1,7 @@
 import LinkSidebar from "@/components/Sidebar/LinksSidebar/page";
 import useSidebar from "@/app/hooks/useSidebar";
 
-const ItemsSidebar = ({ title, href, extra = "", gap, IconComponent }) => {
+const ItemsSidebar = ({ label, href, extra = "", gap, IconComponent, active }) => {
 	const { show } = useSidebar();
 	const fontStyles = { fontSize: "20px" };
 	return (
@@ -13,7 +13,8 @@ const ItemsSidebar = ({ title, href, extra = "", gap, IconComponent }) => {
 			<LinkSidebar
 				icon={<IconComponent style={fontStyles} />}
 				href={href}
-				title={title}
+				active={active}
+				label={label}
 				extra={extra}
 				className={`${show ? "grid grid-cols-[40px_minmax(120px,_1fr)_40px] gap-4  items-center" : ""} ${
 					gap ? "mt-9" : ""

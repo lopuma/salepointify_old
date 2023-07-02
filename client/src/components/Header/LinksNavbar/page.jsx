@@ -1,12 +1,9 @@
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import useHeader from "@/app/hooks/useHeader";
+import { IoSettings } from "react-icons/io5";
 
-const LinkNavbar = ({ href, ariaCurrent, text, icon, hiddenMenuBackdrop }) => {
-	const router = usePathname();
+const LinkNavbar = ({ href, label, icon, hiddenMenuBackdrop, active }) => {
 	const { showNav } = useHeader();
-	const isActive = router === href;
-	const styleColor = { fill: "white" };
 
 	const handleHiddenNav = () => {
 		setTimeout(() => {
@@ -17,31 +14,13 @@ const LinkNavbar = ({ href, ariaCurrent, text, icon, hiddenMenuBackdrop }) => {
 	return (
 		<Link
 			href={href}
-			as={href}
-			className={`flex items-center px-4 py-2 text-slate-100 sm:text-gray-800 dark:text-slate-100 transition duration-100 hover:bg-aside-hover hover:sm:bg-slate-100  dark:hover:bg-aside-hover hover:text-red-400 dark:hover:text-red-400 rounded-md ${
-				isActive ? "font-semibold" : null
-			} ${showNav ? "my-2 items-center justify-center text-center" : ""} group`}
-			aria-current={ariaCurrent ? `${ariaCurrent}` : null}
 			onClick={handleHiddenNav}
+			className="p-2 transition duration-300 h-12 min-w-[80px] cursor-pointer bg-[#f2f2f2] text-[#0f0f0f] rounded-md hover:bg-[#e5e5e5] flex items-center place-content-center"
 		>
 			{icon ? (
-				<img
-					src={icon.src}
-					className={`w-[40px] h-[40px] sm:w-[25px] sm:h-[25px] cursor-pointer pb-2 sm:pb-1 ${
-						isActive ? "border-b-4 border-red-400" : null
-					} ${showNav ? "w-[150px]" : null}`}
-					alt="Settings"
-					aria-current="current"
-					style={styleColor}
-				/>
+				<IoSettings style={{ fontSize: "25px" }} />
 			) : (
-				<label
-					className={`flex-1 whitespace-nowrap pb-1 ${isActive ? "border-b-4 border-red-400" : null} ${
-						showNav ? "w-[150px]" : null
-					}`}
-				>
-					{text}
-				</label>
+				<label className="cursor-pointer whitespace-nowrap">{label}</label>
 			)}
 		</Link>
 	);

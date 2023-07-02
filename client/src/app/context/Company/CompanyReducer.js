@@ -1,4 +1,4 @@
-import { GET_COMPANY } from "../types";
+import { GET_COMPANY } from "../../settings/products/types";
 
 export default (state, action) => {
   const { payload, type } = action;

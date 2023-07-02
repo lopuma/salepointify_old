@@ -5,42 +5,7 @@ import { CiSettings } from "react-icons/ci";
 import { AiOutlineDashboard, AiOutlineUser, AiOutlineUnorderedList, AiOutlineUsergroupAdd } from "react-icons/ai";
 import useSidebar from "@/app/hooks/useSidebar";
 import ItemsSidebar from "../ItemsSidebar/page";
-
-const links = [
-	{
-		ID: "S001",
-		title: "Overview",
-		icon: "CiSettings",
-		href: "/settings",
-	},
-	{
-		ID: "S002",
-		title: "Dashboard",
-		icon: "AiOutlineDashboard",
-		href: "/settings/dashboard",
-	},
-	{
-		ID: "S003",
-		title: "User",
-		gap: false,
-		icon: "AiOutlineUser",
-		href: "/settings/users",
-		extra: "0",
-	},
-	{
-		ID: "S004",
-		title: "Employed",
-		icon: "AiOutlineUsergroupAdd",
-		href: "/settings/employed",
-		extra: "0",
-	},
-	{
-		ID: "S005",
-		title: "Products",
-		icon: "AiOutlineUnorderedList",
-		href: "/settings/products",
-	},
-];
+import { usePathname } from "next/navigation";
 
 const iconMap = {
 	AiOutlineDashboard,
@@ -55,7 +20,43 @@ const ScrollSidebar = () => {
 	const asideRef = useRef(null);
 	const { show } = useSidebar();
 	const { companyData } = useCompany();
+	const pathname = usePathname();
 	let companyName = "";
+	const routes = [
+		{
+			label: "Overview",
+			icon: "CiSettings",
+			href: "/settings",
+			active: pathname === "/settings",
+		},
+		{
+			label: "Dashboard",
+			icon: "AiOutlineDashboard",
+			href: "/settings/dashboard",
+			active: pathname === "/settings/dashboard",
+		},
+		{
+			label: "User",
+			gap: false,
+			icon: "AiOutlineUser",
+			href: "/settings/users",
+			extra: "0",
+			active: pathname === "/settings/users",
+		},
+		{
+			label: "Employed",
+			icon: "AiOutlineUsergroupAdd",
+			href: "/settings/employed",
+			extra: "0",
+			active: pathname === "/settings/employed",
+		},
+		{
+			label: "Products",
+			icon: "AiOutlineUnorderedList",
+			href: "/settings/products",
+			active: pathname === "/settings/products",
+		},
+	];
 	try {
 		if (companyData[0].companyName) {
 			companyName = companyData[0].companyName;
@@ -87,7 +88,7 @@ const ScrollSidebar = () => {
 	return (
 		<aside
 			ref={asideRef}
-			className={`fixed sm:block ${
+			className={`fixed md:block ${
 				show ? "w-[295px]" : "w-[85px]"
 			} p-4 py-6 duration-300 h-screen bg-aside dark:bg-gray-700 text-slate-50 overflow-y-auto overflow-x-hidden sm:h-[calc(100vh-140px)] docs-scrollbar styled-scrollbar rounded-sm hidden`}
 			style={{ width: hasOverflow }}
@@ -103,9 +104,9 @@ const ScrollSidebar = () => {
 				</h2>
 			</div>
 			<ul className={`flex flex-col justify-center items-start gap-3`}>
-				{links.map((link) => {
-					const IconComponent = iconMap[link.icon];
-					return <ItemsSidebar key={link.ID} {...link} IconComponent={IconComponent} />;
+				{routes.map((route) => {
+					const IconComponent = iconMap[route.icon];
+					return <ItemsSidebar key={route.href} {...route} IconComponent={IconComponent} />;
 				})}
 			</ul>
 		</aside>
