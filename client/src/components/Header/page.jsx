@@ -1,5 +1,6 @@
 import Navbar from "@/components/Header/Navbar/page";
 import Logo from "@/components/Header/Logo/page";
+
 export default function Header() {
 	return (
 		<header

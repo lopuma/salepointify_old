@@ -5,27 +5,27 @@ import axios from "axios";
 import config from "@/app/config";
 import CompanyContext from "./CompanyContext";
 import CompanyReducer from "./CompanyReducer";
-const API_BASE_URL = config.API_BASE_URL
+import checkUrlAvailability from "../globals";
+const API_BASE_URL = config.API_BASE_URL;
 const companyUrl = `${API_BASE_URL}/company`;
 
 const CompanyProvider = ({ children }) => {
 	const initialData = [
-		{   
-            firstName: "",
-            lastName: "",
+		{
+			firstName: "",
+			lastName: "",
 			companyName: "",
-            CIF:"",
+			CIF: "",
 			industry: "",
 			founded: "",
 			employees: null,
 			website: "",
-			description:
-				"",
+			description: "",
 			locations: [
 				{
 					name: "",
 					address: "",
-				}
+				},
 			],
 		},
 	];
@@ -37,17 +37,7 @@ const CompanyProvider = ({ children }) => {
 
 	const [state, dispatch] = useReducer(CompanyReducer, initialState);
 
-	const [error, setError] = useState("");
-
-	const checkUrlAvailability = async (url) => {
-		try {
-			const response = await axios.head(url, { timeout: 3000 });
-			return response.status === 200;
-		} catch {
-			setError("The requested URL could not be accessed. Please verify the address and try again later.");
-			return false;
-		}
-	};
+	const [isError, setIsError] = useState("");
 
 	const getData = async () => {
 		try {
@@ -62,17 +52,17 @@ const CompanyProvider = ({ children }) => {
 							type: "GET_COMPANY",
 							payload: data,
 						});
-						setError("");
+						setIsError("");
 					}
 				} else {
 					console.error("Network response OK but HTTP response not OK");
 				}
 			} else {
-				console.error(error);
+				console.error(isError);
 			}
 		} catch (e) {
-			setError("There was a problem with the axios request: " + e.message);
-			console.error(error);
+			setIsError("There was a problem with the axios request: " + e.message);
+			console.error(isError);
 		}
 	};
 
@@ -95,7 +85,7 @@ const CompanyProvider = ({ children }) => {
 		});
 	};
 
-	const data = { companyData: state.companyData, error, postData };
+	const data = { companyData: state.companyData, isError, postData };
 	return <CompanyContext.Provider value={data}>{children}</CompanyContext.Provider>;
 };
 

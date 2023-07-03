@@ -16,21 +16,27 @@ module.exports = {
 		},
 		extend: {
 			colors: {
-				aside: "#2E3840",
-				"aside-hover": "#4E6E81",
+				aside: {
+					DEFAULT: "var(--aside-background)",
+					foreground: "var(--aside-foreground)",
+					hover: "var(--aside-hover)",
+
+				},
 				border: "hsl(var(--border))",
 				input: "hsl(var(--input))",
 				ring: "hsl(var(--ring))",
-
+				primary: "var(--primary)",
 				background: "var(--background)",
 				foreground: "var(--foreground)",
 				primary: {
-					DEFAULT: "hsl(var(--primary))",
-					foreground: "hsl(var(--primary-foreground))",
+					DEFAULT: "var(--primary)",
+					foreground: "var(--primary-foreground)",
+					hover: "var(--primary-hover)",
 				},
 				secondary: {
-					DEFAULT: "hsl(var(--secondary))",
-					foreground: "hsl(var(--secondary-foreground))",
+					DEFAULT: "var(--secondary)",
+					foreground: "var(--secondary-foreground)",
+					hover: "var(--secondary-hover)",
 				},
 				destructive: {
 					DEFAULT: "hsl(var(--destructive))",

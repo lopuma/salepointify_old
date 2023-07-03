@@ -1,0 +1,9 @@
+.items {
+	background-color: var(--primary);
+	color: var(--primary-foreground);
+}
+
+.items:hover {
+	background-color: var(--primary-hover);
+	color: var(--secondary);
+}

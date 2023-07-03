@@ -1,4 +1,4 @@
-import LinkSidebar from "@/components/Sidebar/LinksSidebar/page";
+import RoutesSidebar from "./RoutesSidebar/page";
 import useSidebar from "@/app/hooks/useSidebar";
 
 const ItemsSidebar = ({ label, href, extra = "", gap, IconComponent, active }) => {
@@ -6,11 +6,11 @@ const ItemsSidebar = ({ label, href, extra = "", gap, IconComponent, active }) =
 	const fontStyles = { fontSize: "20px" };
 	return (
 		<li
-			className={`rounded-md  hover:bg-aside-hover hover:text-red-300 hover:font-semibold cursor-pointer text-gray-300 text-sm h-[60px] ${
+			className={`rounded-md text-aside-foreground hover:bg-aside-hover hover:text-primary font-semibold cursor-pointer h-[60px] ${
 				show ? "px-2" : "px-4"
 			} group`}
 		>
-			<LinkSidebar
+			<RoutesSidebar
 				icon={<IconComponent style={fontStyles} />}
 				href={href}
 				active={active}
@@ -18,7 +18,7 @@ const ItemsSidebar = ({ label, href, extra = "", gap, IconComponent, active }) =
 				extra={extra}
 				className={`${show ? "grid grid-cols-[40px_minmax(120px,_1fr)_40px] gap-4  items-center" : ""} ${
 					gap ? "mt-9" : ""
-				} mx-2  h-[60px]`}
+				} mx-2  h-[60px] group-hover:cursor-pointer`}
 				show={show}
 			/>
 		</li>

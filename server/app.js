@@ -12,7 +12,8 @@ const PORT = _PORT;
 const app = express();
 
 // 1 - Usamos Cors
-app.use(cors(configCors.cors.server));
+// app.use(cors(configCors.cors.server));
+app.use(cors());
 
 // 2 - midlelware
 app.use(morgan("dev"));

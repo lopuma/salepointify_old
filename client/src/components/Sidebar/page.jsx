@@ -1,4 +1,4 @@
-import ScrollSidebar from "@/components/Sidebar/ScrollSidebar/page";
+import ScrollSidebar from "./ScrollSidebar/page";
 import ToggleSidebar from "./ToggleSidebar/page";
 import BackdropSidebar from "./BackdropSidebar/page";
 import SidebarProvider from "@/app/context/Sidebar/SidebarState";

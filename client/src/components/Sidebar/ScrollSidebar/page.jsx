@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { CiSettings } from "react-icons/ci";
 import { AiOutlineDashboard, AiOutlineUser, AiOutlineUnorderedList, AiOutlineUsergroupAdd } from "react-icons/ai";
 import useSidebar from "@/app/hooks/useSidebar";
-import ItemsSidebar from "../ItemsSidebar/page";
+import ItemsSidebar from "./ItemsSidebar/page";
 import { usePathname } from "next/navigation";
 
 const iconMap = {
@@ -24,10 +24,10 @@ const ScrollSidebar = () => {
 	let companyName = "";
 	const routes = [
 		{
-			label: "Overview",
+			label: "Company",
 			icon: "CiSettings",
-			href: "/settings",
-			active: pathname === "/settings",
+			href: "/settings/company",
+			active: pathname === "/settings/company",
 		},
 		{
 			label: "Dashboard",
@@ -90,19 +90,19 @@ const ScrollSidebar = () => {
 			ref={asideRef}
 			className={`fixed md:block ${
 				show ? "w-[295px]" : "w-[85px]"
-			} p-4 py-6 duration-300 h-screen bg-aside dark:bg-gray-700 text-slate-50 overflow-y-auto overflow-x-hidden sm:h-[calc(100vh-140px)] docs-scrollbar styled-scrollbar rounded-sm hidden`}
+			} p-4 py-6 duration-300 h-screen bg-aside overflow-y-auto overflow-x-hidden sm:h-[calc(100vh-140px)] docs-scrollbar styled-scrollbar rounded-sm hidden`}
 			style={{ width: hasOverflow }}
 		>
-			<div className="flex gap-x-4 items-center my-3">
+			<a href="/" className="hidden md:flex gap-x-4 items-center my-3">
 				<img
 					src={logo.src}
 					className={`px-3 cursor-pointer duration-500 ${show && "rotate-[360deg]"}`}
 					alt={companyName}
 				/>
-				<h2 className={`text-white origin-left font-medium text-xl duration-200 ${!show && "scale-0"}`}>
+				<h2 className={`text-aside-foreground origin-left font-medium text-xl duration-200 ${!show && "scale-0"}`}>
 					{companyName ? companyName : "NAME_COMPANY"}
 				</h2>
-			</div>
+			</a>
 			<ul className={`flex flex-col justify-center items-start gap-3`}>
 				{routes.map((route) => {
 					const IconComponent = iconMap[route.icon];
