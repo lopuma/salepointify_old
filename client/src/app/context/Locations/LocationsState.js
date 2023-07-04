@@ -60,6 +60,7 @@ const PopulationsProvider = ({ children }) => {
 	}, []);
 
 	const data = { dataProvinces, dataPopulations, isError };
+
 	return <LocationsContext.Provider value={data}>{children}</LocationsContext.Provider>;
 };
 

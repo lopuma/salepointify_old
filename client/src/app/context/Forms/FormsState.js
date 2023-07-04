@@ -13,12 +13,15 @@ const FormsProvider = ({ children }) => {
 
 	function validate(fieldName, formData, isRequired) {
 		let errors = {};
-		const fieldValue = formData[fieldName].trim();
-		const fieldLength = fieldValue.length;
-		if ((fieldValue === "" || fieldLength < 4) && isRequired[fieldName]) {
-			errors = { ...errors, [fieldName]: errorMessages[fieldName] };
-		}
-		return errors;
+		console.log("recivo un form ", { fieldName, formData, isRequired });
+		try {
+			const fieldValue = formData[fieldName].trim();
+			const fieldLength = fieldValue.length;
+			if ((fieldValue === "" || fieldLength < 4) && isRequired[fieldName]) {
+				errors = { ...errors, [fieldName]: errorMessages[fieldName] };
+			}
+			return errors;
+		} catch (error) {}
 	}
 
 	const data = { capitalizeWords, validate };

@@ -71,6 +71,7 @@ const CompanyProvider = ({ children }) => {
 	}, []);
 
 	const postData = async (data) => {
+		console.log({ data }, "<==");
 		axios
 			.post(companyUrl, data)
 			.then(function (response) {
@@ -86,6 +87,7 @@ const CompanyProvider = ({ children }) => {
 	};
 
 	const data = { companyData: state.companyData, isError, postData };
+	console.log("==> ", { data });
 	return <CompanyContext.Provider value={data}>{children}</CompanyContext.Provider>;
 };
 

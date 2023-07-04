@@ -1,23 +1,26 @@
-import React from "react";
 import ContentLoader from "react-content-loader";
 
 const Loader = (props) => (
-	<div className="container flex place-content-center items-center p-auto w-full h-full">
+	<div className="flex place-content-center mt-10">
 		<ContentLoader
-			speed={2}
-			width={476}
-			height={124}
-			viewBox="0 0 476 124"
-			backgroundColor="#bfbfbf"
-			foregroundColor="#d1d1d1"
+			height={200}
+			width={400}
+			viewBox="0 0 400 200"
+			backgroundColor="#d9d9d9"
+			foregroundColor="#ecebeb"
 			{...props}
 		>
-			<rect x="48" y="8" rx="3" ry="3" width="88" height="6" />
-			<rect x="48" y="26" rx="3" ry="3" width="52" height="6" />
-			<rect x="0" y="56" rx="3" ry="3" width="410" height="6" />
-			<rect x="0" y="72" rx="3" ry="3" width="380" height="6" />
-			<rect x="0" y="88" rx="3" ry="3" width="178" height="6" />
-			<circle cx="20" cy="20" r="20" />
+			<rect x="15" y="15" rx="4" ry="4" width="130" height="10" />
+			<rect x="155" y="15" rx="3" ry="3" width="130" height="10" />
+			<rect x="295" y="15" rx="3" ry="3" width="90" height="10" />
+			<rect x="15" y="50" rx="3" ry="3" width="90" height="10" />
+			<rect x="115" y="50" rx="3" ry="3" width="60" height="10" />
+			<rect x="185" y="50" rx="3" ry="3" width="200" height="10" />
+			<rect x="15" y="90" rx="3" ry="3" width="130" height="10" />
+			<rect x="160" y="90" rx="3" ry="3" width="120" height="10" />
+			<rect x="290" y="90" rx="3" ry="3" width="95" height="10" />
+			<rect x="15" y="130" rx="3" ry="3" width="130" height="10" />
+			<rect x="160" y="130" rx="3" ry="3" width="225" height="10" />
 		</ContentLoader>
 	</div>
 );

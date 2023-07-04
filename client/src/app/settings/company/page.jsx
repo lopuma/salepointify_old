@@ -12,25 +12,21 @@ import useLocations from "@/app/hooks/useLocations";
 
 const FormCompany = () => {
 	const { companyData, isError, postData } = useCompany();
-	const { dataProvinces, dataPopulations, handleSelectedPopulations } = useLocations();
+	const { dataProvinces, dataPopulations } = useLocations();
+	const { capitalizeWords, validate } = useForms();
 	const [editMode, setEditMode] = useState(false);
 	const colors = {
-		color: "red",
+		color: "var(--primary)",
 	};
 
 	const DetailView = ({ data, dataProvinces, dataPopulations }) => {
+		const inputRefs = useRef([]);
 		const { companyName, firstName, lastName, CIF, industry, founded, employees, website, description, locations } =
 			data[0];
 		const [isDataProvinces, setIsDataProvinces] = useState(dataProvinces);
 		const [isDataPopulations, setIsDataPopulations] = useState(dataPopulations);
 		const [selectedPopulation, setSelectedPopulation] = useState([]);
 		const [isSelected, setIsSelected] = useState(false);
-
-		useEffect(() => {
-			setIsDataProvinces(dataProvinces);
-			setIsDataPopulations(dataPopulations);
-		}, []);
-
 		const [isSubmitting, setIsSubmitting] = useState(false);
 		const [isErrors, setIsErrors] = useState({});
 		const [isErrorsState, setIsErrorsState] = useState({});
@@ -39,15 +35,26 @@ const FormCompany = () => {
 			firstName: firstName || "",
 			lastName: lastName || "",
 			CIF: CIF || "",
+			parent_code: locations[0].parent_code || "",
+			state: locations[0].state || "",
+			population: locations[0].population || "",
+			zip: locations[0].zip || "",
 		});
 		const [isRequired, setIsRequired] = useState({
 			companyName: false,
 			firstName: false,
 			lastName: false,
 			CIF: false,
+			parent_code: false,
+			state: false,
+			population: false,
+			zip: false,
 		});
-		const inputRefs = useRef([]);
-		const { capitalizeWords, validate } = useForms();
+
+		useEffect(() => {
+			setIsDataProvinces(dataProvinces);
+			setIsDataPopulations(dataPopulations);
+		}, []);
 
 		useEffect(() => {
 			const timeout = setTimeout(() => {
@@ -81,12 +88,36 @@ const FormCompany = () => {
 		}, []);
 
 		const valuesAllInputs = () => {
-			const inputValues = {};
-			Object.keys(inputRefs.current).forEach((key) => {
-				const value = inputRefs.current[key].value;
-				inputValues[key] = value;
-			});
-			return inputValues;
+			const selectState = document.getElementById("grid-state");
+			const selectProvinces = document.getElementById("grid-populations");
+
+			const inputValues = Object.assign(
+				{},
+				...Object.entries(inputRefs.current).map(([key, input]) => ({ [key]: input.value }))
+			);
+
+			const index = selectState.selectedIndex;
+
+			const populations = {
+				parent_code: selectState.value,
+				state: selectState.options[index].text,
+				population: selectProvinces.value,
+				zip: inputValues.zip, // Agregamos el atributo 'data-zip' del elemento selectProvinces
+			};
+
+			const data = {
+				CIF: inputValues.cif,
+				companyName: inputValues.companyName,
+				description: inputValues.description,
+				employees: inputValues.employees,
+				firstName: inputValues.firstName,
+				founded: inputValues.founded,
+				industry: inputValues.industry,
+				lastName: inputValues.lastName,
+				locations: [populations], // Colocamos el objeto populations dentro de un array
+			};
+
+			return data;
 		};
 
 		const handleSubmit = (e) => {
@@ -95,10 +126,13 @@ const FormCompany = () => {
 			const allErrorsState = {};
 			Object.keys(formData).forEach((fieldName) => {
 				const fieldErrors = validate(fieldName, formData, isRequired);
-				if (Object.keys(fieldErrors).length > 0) {
-					allErrorsText[fieldName] = fieldErrors[fieldName];
-					allErrorsState[fieldName] = true;
-				}
+				console.log({ fieldErrors });
+				try {
+					if (Object.keys(fieldErrors).length > 0) {
+						allErrorsText[fieldName] = fieldErrors[fieldName];
+						allErrorsState[fieldName] = true;
+					}
+				} catch (error) {}
 			});
 			if (Object.keys(allErrorsText).length > 0) {
 				setIsErrors(allErrorsText);
@@ -144,9 +178,10 @@ const FormCompany = () => {
 			}));
 		}, []);
 
-		const handleOnChangeSelect = async (e) => {
+		const handleOnChangeSelectState = async (e) => {
 			e.preventDefault();
 			const parent_code = e.target.value;
+			//setFormData["parent_code"] = parent_code;
 			handleSelectedPopulations(parent_code);
 			setIsSelected(true);
 		};
@@ -155,6 +190,7 @@ const FormCompany = () => {
 			const result = isDataPopulations.filter((population) => population.parent_code === parent_code);
 			setSelectedPopulation(result);
 		};
+
 		return (
 			<>
 				<form onSubmit={handleSubmit}>
@@ -227,15 +263,17 @@ const FormCompany = () => {
 						<div className="flex flex-wrap gap-2 md:gap-0 -mx-3 mb-2">
 							{/* TODO PROVINCES */}
 							<div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-								<Label htmlFor="grid-provinces">State / Provinces</Label>
+								<Label htmlFor="grid-state">State / Provinces</Label>
 								<div className="relative">
 									<select
+										name="state"
+										id="grid-state"
 										className={`block appearance-none w-full ${
 											editMode ? "bg-white" : "bg-gray-200"
-										} border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500`}
-										id="grid-provinces"
+										} border border-gray-200 text-gray-700 h-10 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500`}
 										disabled={editMode ? false : true}
-										onChange={(e) => handleOnChangeSelect(e)}
+										onChange={(e) => handleOnChangeSelectState(e)}
+										defaultValue={formData.parent_code ? formData.parent_code : ""}
 									>
 										{isDataProvinces.map(({ label, code }) => {
 											return (
@@ -262,11 +300,12 @@ const FormCompany = () => {
 								<Label htmlFor="grid-populations">Populations</Label>
 								<div className="relative">
 									<select
+										name="populations"
+										id="grid-populations"
 										className={`block appearance-none w-full ${
 											isSelected ? "bg-white" : "bg-gray-200"
-										} border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500`}
-										id="grid-populations"
-										defaultValue="Choose a Populations"
+										} border border-gray-200 text-gray-700 h-10 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500`}
+										defaultValue={formData.population ? formData.population : "Choose a Populations"}
 										disabled={isSelected ? false : true}
 									>
 										{isSelected ? (
@@ -277,8 +316,14 @@ const FormCompany = () => {
 													</option>
 												);
 											})
+										) : formData.population ? (
+											<option value={formData.population} disabled>
+												{formData.population}
+											</option>
 										) : (
-											<option disabled>Choose a Populations</option>
+											<option value="" disabled selected>
+												Choose a Populations
+											</option>
 										)}
 									</select>
 									<div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -295,30 +340,33 @@ const FormCompany = () => {
 							</div>
 							{/* TODO POSTAL CODE */}
 							<div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-								<Label htmlFor="grid-zip">Zip</Label>
-								<input
-									className={`appearance-none block w-full ${
-										editMode ? "bg-white" : "bg-gray-200"
-									} text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500`}
+								<Label htmlFor="grid-zip">Zip code</Label>
+								<Input
+									valueRef="zip"
 									id="grid-zip"
 									type="text"
 									placeholder="90210"
-									readOnly={!editMode}
+									value={formData.zip}
+									errorState={isErrorsState.zip}
+									onChange={(e) => handleChange(e, "zip")}
+									editMode={editMode}
+									required={false}
+									handleRefRegister={handleRefRegister}
 								/>
 							</div>
 						</div>
 						<div className="flex items-end place-content-end mt-8">
 							{editMode ? (
 								isSubmitting ? (
-									<Button text="Submitting" loader=<LoaderOval type="button" /> />
+									<Button text="Submitting" loader=<LoaderOval type="button" intent="primary" /> />
 								) : (
 									<div className="flex gap-4">
-										<Button text="Submit" type="submit" />
-										<Button text="Cancel" type="button" className="bg-red-600 text-white" onClick={handleCancel} />
+										<Button text="Submit" type="submit" intent="primary" />
+										<Button text="Cancel" type="button" intent="secondary" onClick={handleCancel} />
 									</div>
 								)
 							) : (
-								<Button text="Edit" type="button" onClick={handleEditClick} />
+								<Button text="Edit" type="button" onClick={handleEditClick} intent="primary" />
 							)}
 						</div>
 					</div>
@@ -328,19 +376,23 @@ const FormCompany = () => {
 		);
 	};
 
-	if (!isError) {
-		return <DetailView data={companyData} dataProvinces={dataProvinces} dataPopulations={dataPopulations} />;
-	} else {
-		return (
-			<section className="px-4 bg-white">
-				{isError && (
-					<ErrorComponent
-						error={isError}
-						className="flex justify-center items-center h-screen text-red-500 bold text-lg"
-					/>
-				)}
-			</section>
-		);
+	try {
+		if (!isError) {
+			return <DetailView data={companyData} dataProvinces={dataProvinces} dataPopulations={dataPopulations} />;
+		} else {
+			return (
+				<section className="px-4 bg-white">
+					{isError && (
+						<ErrorComponent
+							error={isError}
+							className="flex justify-center items-center h-screen text-red-500 bold text-lg"
+						/>
+					)}
+				</section>
+			);
+		}
+	} catch (error) {
+		console.error(error);
 	}
 };
 

@@ -19,8 +19,10 @@ const getCompany = (req, res) => {
 				"Acme Corporation is a leading manufacturing company specializing in the production of high-quality widgets. With over 30 years of experience, Acme has established itself as an industry leader, providing innovative solutions to clients worldwide.",
 			locations: [
 				{
-					name: "Headquarters",
-					address: "123 Main Street, New York, USA",
+					parent_code: 20,
+					state: "Gipuzkoa",
+					population: "Donostia/San Sebastián",
+					zip: "20017",
 				},
 			],
 		},
@@ -28,8 +30,8 @@ const getCompany = (req, res) => {
 };
 
 const createCompany = (req, res) => {
-	const { firstName, lastName, companyName } = req.body;
-	console.log({ firstName, lastName, companyName });
+	const { firstName, lastName, companyName, locations } = req.body;
+	console.log({ firstName, lastName, companyName, locations });
 	res.status(201).json({
 		success: true,
 		message: "Update Company name",
