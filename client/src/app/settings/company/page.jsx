@@ -260,7 +260,7 @@ const FormCompany = () => {
 								{isErrors.CIF && <ErrorComponent error={isErrors.CIF} />}
 							</div>
 						</div>
-						<div className="flex flex-wrap gap-2 md:gap-0 -mx-3 mb-2">
+						<div className="flex flex-wrap gap-2 md:gap-0 -mx-3 mb-6">
 							{/* TODO PROVINCES */}
 							<div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
 								<Label htmlFor="grid-state">State / Provinces</Label>
@@ -353,6 +353,20 @@ const FormCompany = () => {
 									required={false}
 									handleRefRegister={handleRefRegister}
 								/>
+							</div>
+						</div>
+						<div className="flex flex-wrap gap-2 md:gap-0 -mx-3 mb-2">
+							<div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+								<Label htmlFor="grid-industry">Industry</Label>
+								<Input id="grid-industry" placeholder={"Services"}></Input>
+							</div>
+							<div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+								<Label htmlFor="grid-founded">Founded</Label>
+								<Input id="grid-founded" placeholder={"1890"}></Input>
+							</div>
+							<div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+								<Label htmlFor="grid-employees">Employees</Label>
+								<Input id="grid-employees" placeholder={"500"}></Input>
 							</div>
 						</div>
 						<div className="flex items-end place-content-end mt-8">

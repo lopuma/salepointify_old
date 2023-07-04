@@ -29,19 +29,18 @@ const Input = ({
 	placeholder,
 	value,
 	handleRefRegister,
-	editMode,
 	onChange,
 	className,
 	errorState,
+	editMode = true,
 	required,
 	...props
 }) => {
 	const inputRef = useRef(null);
-
 	useEffect(() => {
 		handleRefRegister?.(valueRef, inputRef.current);
 	}, [inputRef]);
-
+	console.log({ editMode, id });
 	return (
 		<input
 			ref={inputRef}
