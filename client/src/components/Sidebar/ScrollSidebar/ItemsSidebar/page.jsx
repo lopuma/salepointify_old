@@ -16,9 +16,11 @@ const ItemsSidebar = ({ label, href, extra = "", gap, IconComponent, active }) =
 				active={active}
 				label={label}
 				extra={extra}
-				className={`${show ? "grid grid-cols-[40px_minmax(120px,_1fr)_40px] gap-4  items-center" : ""} ${
-					gap ? "mt-9" : ""
-				} mx-2  h-[60px] group-hover:cursor-pointer`}
+				className={`
+                    flex items-center h-full 
+                    ${show ? "grid grid-cols-[40px_minmax(120px,_1fr)_40px] gap-4  items-center" : null} 
+                    group-hover:cursor-pointer
+                `}
 				show={show}
 			/>
 		</li>

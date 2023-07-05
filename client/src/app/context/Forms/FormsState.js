@@ -1,3 +1,4 @@
+"use client";
 import FormsContext from "./FormsContext";
 import { errorMessages } from "@/app/context/Errors/errorsInputs";
 
@@ -13,15 +14,22 @@ const FormsProvider = ({ children }) => {
 
 	function validate(fieldName, formData, isRequired) {
 		let errors = {};
-		console.log("recivo un form ", { fieldName, formData, isRequired });
-		try {
-			const fieldValue = formData[fieldName].trim();
-			const fieldLength = fieldValue.length;
-			if ((fieldValue === "" || fieldLength < 4) && isRequired[fieldName]) {
+		const fieldValue = formData[fieldName];
+		if (typeof fieldValue === "string") {
+			const trimmedValue = fieldValue.trim();
+			const fieldLength = trimmedValue.length;
+			if ((trimmedValue === "" || fieldLength < 4) && isRequired[fieldName]) {
 				errors = { ...errors, [fieldName]: errorMessages[fieldName] };
 			}
-			return errors;
-		} catch (error) {}
+		} else if (typeof fieldValue === "number") {
+			if (fieldValue < 0) {
+				// El valor es menor que 0
+				// Realiza la acción que desees
+				errors = { ...errors, [fieldName]: errorMessages[fieldName] };
+			}
+		}
+
+		return errors;
 	}
 
 	const data = { capitalizeWords, validate };

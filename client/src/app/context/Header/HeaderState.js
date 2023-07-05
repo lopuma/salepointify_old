@@ -1,3 +1,4 @@
+"use client";
 import HeaderContext from "./HeaderContext";
 import { useState } from "react";
 

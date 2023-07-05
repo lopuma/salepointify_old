@@ -1,3 +1,4 @@
+"use client";
 import ToggleButton from "@/components/Header/ToggleMenu/page";
 import useHeader from "@/app/hooks/useHeader";
 import logoSettings from "@/assets/settings.svg";

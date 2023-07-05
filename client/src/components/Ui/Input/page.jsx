@@ -1,5 +1,4 @@
 "use client";
-import { useRef, useEffect } from "react";
 import { cva } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
@@ -23,12 +22,12 @@ const inputVariants = cva(
 );
 
 const Input = ({
-	valueRef,
+	name,
+	inputRefs,
 	id,
 	type,
 	placeholder,
 	value,
-	handleRefRegister,
 	onChange,
 	className,
 	errorState,
@@ -36,14 +35,10 @@ const Input = ({
 	required,
 	...props
 }) => {
-	const inputRef = useRef(null);
-	useEffect(() => {
-		handleRefRegister?.(valueRef, inputRef.current);
-	}, [inputRef]);
-	console.log({ editMode, id });
 	return (
 		<input
-			ref={inputRef}
+			ref={inputRefs ?? inputRefs}
+			name={name}
 			className={cn(inputVariants({ errorState, className }))}
 			id={id}
 			type={type || "text"}

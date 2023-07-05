@@ -1,3 +1,4 @@
+"use client";
 import logo from "@/assets/logo.svg";
 import useCompany from "@/app/hooks/useCompany";
 import { useEffect, useState } from "react";
@@ -8,7 +9,8 @@ const Logo = () => {
 	const [companyName, setCompanyName] = useState("");
 
 	useEffect(() => {
-		setCompanyName(companyData[0].companyName);
+		//setCompanyName(companyData[0].companyName);
+		setCompanyName("otro");
 	}, [companyData]);
 
 	return (

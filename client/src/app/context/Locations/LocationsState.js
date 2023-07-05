@@ -1,3 +1,4 @@
+"use client";
 import { useEffect, useState } from "react";
 import LocationsContext from "./LocationsContext";
 import axios from "axios";

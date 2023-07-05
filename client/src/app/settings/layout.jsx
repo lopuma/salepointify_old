@@ -1,10 +1,13 @@
-"use client";
-
 import React, { Suspense } from "react";
 import Sidebar from "@/components/Sidebar/page";
 import FormsProvider from "../context/Forms/FormsState";
 import LocationsProvider from "../context/Locations/LocationsState";
 import Loader from "./loading";
+
+export const metadata = {
+	title: "Settings",
+	description: "E-Commerce Sale Pointify",
+};
 
 export default function SettingsLayout({ children }) {
 	return (

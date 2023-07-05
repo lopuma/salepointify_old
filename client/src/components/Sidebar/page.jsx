@@ -1,3 +1,4 @@
+"use client";
 import ScrollSidebar from "./ScrollSidebar/page";
 import ToggleSidebar from "./ToggleSidebar/page";
 import BackdropSidebar from "./BackdropSidebar/page";

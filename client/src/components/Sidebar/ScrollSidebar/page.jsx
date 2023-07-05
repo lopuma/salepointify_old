@@ -37,7 +37,6 @@ const ScrollSidebar = () => {
 		},
 		{
 			label: "User",
-			gap: false,
 			icon: "AiOutlineUser",
 			href: "/settings/users",
 			extra: "0",
@@ -58,9 +57,10 @@ const ScrollSidebar = () => {
 		},
 	];
 	try {
-		if (companyData[0].companyName) {
-			companyName = companyData[0].companyName;
-		}
+		// if (companyData[0].companyName) {
+		// 	companyName = companyData[0].companyName;
+		// }
+		companyName = "";
 	} catch (e) {}
 
 	useEffect(() => {
@@ -88,22 +88,32 @@ const ScrollSidebar = () => {
 	return (
 		<aside
 			ref={asideRef}
-			className={`fixed md:block ${
-				show ? "w-[295px]" : "w-[85px]"
-			} p-4 py-6 duration-300 h-screen bg-aside overflow-y-auto overflow-x-hidden sm:h-[calc(100vh-140px)] docs-scrollbar styled-scrollbar rounded-sm hidden`}
+			className={`
+                fixed md:block z-10
+                ${show ? "w-[295px]" : "w-[85px]"}
+                p-4 py-6 duration-300 h-screen bg-aside overflow-y-auto overflow-x-hidden sm:h-[calc(100vh-140px)] docs-scrollbar styled-scrollbar rounded-sm hidden
+            `}
 			style={{ width: hasOverflow }}
 		>
 			<a href="/" className="hidden md:flex gap-x-4 items-center my-3">
 				<img
 					src={logo.src}
-					className={`px-3 cursor-pointer duration-500 ${show && "rotate-[360deg]"}`}
+					className={`
+                        ml-2 cursor-pointer duration-500 
+                        ${show && "rotate-[360deg]"}
+                    `}
 					alt={companyName}
 				/>
-				<h2 className={`text-aside-foreground origin-left font-medium text-xl duration-200 ${!show && "scale-0"}`}>
+				<h2
+					className={`
+                    text-aside-foreground origin-left font-medium text-xl duration-200 
+                    ${!show && "scale-0"}
+                `}
+				>
 					{companyName ? companyName : "NAME_COMPANY"}
 				</h2>
 			</a>
-			<ul className={`flex flex-col justify-center items-start gap-3`}>
+			<ul className={`flex flex-col justify-center items-center gap-3`}>
 				{routes.map((route) => {
 					const IconComponent = iconMap[route.icon];
 					return <ItemsSidebar key={route.href} {...route} IconComponent={IconComponent} />;
