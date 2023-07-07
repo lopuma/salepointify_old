@@ -5,13 +5,26 @@ import { useEffect, useState } from "react";
 import styles from "./logo.module.css";
 
 const Logo = () => {
-	const { companyData } = useCompany();
+	const { dataCompany, isDataCompanyUpdated, setIsDataCompanyUpdated } = useCompany();
 	const [companyName, setCompanyName] = useState("");
-
 	useEffect(() => {
-		//setCompanyName(companyData[0].companyName);
-		setCompanyName("otro");
-	}, [companyData]);
+		console.log("0 -->", { isDataCompanyUpdated });
+		if (isDataCompanyUpdated) {
+			try {
+				setCompanyName(dataCompany[0]?.companyName);
+			} catch (error) {}
+		}
+	}, [dataCompany, isDataCompanyUpdated]);
+	// useEffect(() => {
+	// 	try {
+	// 		setCompanyName(dataCompany[0]?.companyName);
+	// 		setIsDataCompanyUpdated(true);
+	// 		console.log("1 -->", { isDataCompanyUpdated });
+	// 	} catch (error) {
+	// 		setIsDataCompanyUpdated(false);
+	// 		console.log("2 -->", { isDataCompanyUpdated });
+	// 	}
+	// }, [dataCompany]);
 
 	return (
 		<a href="/" className="flex items-center px-2 w-5/12 h-[60px]">

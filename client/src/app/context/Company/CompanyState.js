@@ -1,5 +1,5 @@
 "use client";
-import { useReducer, useState, useCallback } from "react";
+import { useReducer, useState, useCallback, useEffect } from "react";
 import CompanyContext from "./CompanyContext";
 import CompanyReducer from "./CompanyReducer";
 import { allCompanyData } from "@/app/services/company";
@@ -30,12 +30,13 @@ const CompanyProvider = ({ children }) => {
 			],
 		},
 	];
-
 	const initialState = {
 		companyData: initialData,
 	};
 
 	const [state, dispatch] = useReducer(CompanyReducer, initialState);
+	const [dataCompany, setDataCompany] = useState(null);
+	const [isDataCompanyUpdated, setIsDataCompanyUpdated] = useState(false);
 
 	const [isError, setIsError] = useState("");
 
@@ -46,9 +47,10 @@ const CompanyProvider = ({ children }) => {
 				type: "GET_COMPANY",
 				payload: [newCompanyData],
 			});
-			const data = newCompanyData;
-			console.log("cuando redner ", data);
-			return data;
+			console.log(" <== CUANTO SE EJECUTA GET ==>");
+			setDataCompany(newCompanyData);
+			setIsDataCompanyUpdated(true);
+			return newCompanyData;
 		} catch (error) {
 			console.error(
 				"An error occurred while getting company data. Please try again later, please check the URL.:",
@@ -58,23 +60,33 @@ const CompanyProvider = ({ children }) => {
 		}
 	}, []);
 
+	// useEffect(() => {
+	// 	console.log("CUANTO SE EJECUTA");
+	// 	//getCompany();
+	// 	setDataCompany(state.companyData);
+	// }, []);
+
 	const postData = async (data) => {
 		axios
 			.post(companyUrl, data)
 			.then(function (response) {
 				console.info(response);
-				dispatch({
-					type: "GET_COMPANY",
-					payload: [data],
-				});
 			})
 			.catch((e) => {
 				console.error(e);
 				setIsError(e);
 			});
+		console.log("EL DATA QUE RECIBO => ", data);
+		setDataCompany(data[0]);
+		dispatch({
+			type: "GET_COMPANY",
+			payload: [data],
+		});
+		setIsDataCompanyUpdated(false);
 	};
 
-	const data = { isError, postData, getCompany };
+	const data = { isError, postData, getCompany, dataCompany, isDataCompanyUpdated, setIsDataCompanyUpdated };
+	console.log("3 --> ", { data });
 	return <CompanyContext.Provider value={data}>{children}</CompanyContext.Provider>;
 };
 

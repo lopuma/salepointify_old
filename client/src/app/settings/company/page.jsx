@@ -13,7 +13,7 @@ function FormCompany() {
 	const { isError } = useCompany();
 	const DetailView = useMemo(() => {
 		const InnerDetailView = () => {
-			const { isError, postData, getCompany } = useCompany();
+			const { isError, postData, getCompany, setIsDataCompanyUpdated } = useCompany();
 			const [editMode, setEditMode] = useState(false);
 			const [formData, setFormData] = useState(null);
 			const { dataProvinces, dataPopulations } = useLocations();
@@ -54,7 +54,6 @@ function FormCompany() {
 			useEffect(() => {
 				const fetchData = async () => {
 					const data = await getCompany();
-					console.log("RECIBO DATA ", data[0]);
 					setFormData(data[0]);
 				};
 
@@ -157,12 +156,12 @@ function FormCompany() {
 			const handleSubmit = (event) => {
 				event.preventDefault();
 				const data = valuesAllInputs();
-				console.log({ data });
 				setIsSubmitting(true);
 				setTimeout(() => {
 					postData(data);
 					setEditMode(false);
 					setIsSelected(false);
+					setIsDataCompanyUpdated(true);
 				}, 2000);
 			};
 
