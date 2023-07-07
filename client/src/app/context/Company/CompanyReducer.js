@@ -5,6 +5,7 @@ export default (state, action) => {
 
 	switch (type) {
 		case GET_COMPANY:
+			console.log("si ahce?");
 			return {
 				...state,
 				companyData: payload,

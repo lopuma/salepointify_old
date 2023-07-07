@@ -1,8 +1,12 @@
 "use client";
-import { useReducer, useState, useCallback, useEffect } from "react";
+import { useReducer, useState, useCallback } from "react";
 import CompanyContext from "./CompanyContext";
 import CompanyReducer from "./CompanyReducer";
 import { allCompanyData } from "@/app/services/company";
+import axios from "axios";
+import config from "@/app/config";
+const API_BASE_URL = config.API_BASE_URL;
+const companyUrl = `${API_BASE_URL}/company`;
 
 const CompanyProvider = ({ children }) => {
 	const initialData = [
@@ -27,30 +31,31 @@ const CompanyProvider = ({ children }) => {
 		},
 	];
 
-	// const initialState = {
-	// 	companyData: initialData,
-	// };
+	const initialState = {
+		companyData: initialData,
+	};
 
-	// const [state, dispatch] = useReducer(CompanyReducer, initialState);
+	const [state, dispatch] = useReducer(CompanyReducer, initialState);
 
 	const [isError, setIsError] = useState("");
-	const [dataCompany, setDataCompany] = useState(null);
 
 	const getCompany = useCallback(async () => {
-		console.log("cuanto se rende?");
 		try {
 			const newCompanyData = await allCompanyData();
-			setDataCompany(newCompanyData);
+			dispatch({
+				type: "GET_COMPANY",
+				payload: [newCompanyData],
+			});
+			const data = newCompanyData;
+			console.log("cuando redner ", data);
+			return data;
 		} catch (error) {
-			console.error("Error occurred:", error);
-			// Aquí puedes realizar acciones adicionales según tus necesidades
-			// Por ejemplo, puedes mostrar un mensaje de error al usuario
-			setIsError("An error occurred while fetching company data. Please try again later.");
+			console.error(
+				"An error occurred while getting company data. Please try again later, please check the URL.:",
+				error
+			);
+			setIsError("An error occurred while getting company data. Please try again later, please check the URL.");
 		}
-	}, []);
-
-	useEffect(() => {
-		getCompany();
 	}, []);
 
 	const postData = async (data) => {
@@ -58,19 +63,18 @@ const CompanyProvider = ({ children }) => {
 			.post(companyUrl, data)
 			.then(function (response) {
 				console.info(response);
+				dispatch({
+					type: "GET_COMPANY",
+					payload: [data],
+				});
 			})
 			.catch((e) => {
 				console.error(e);
 				setIsError(e);
 			});
-		dispatch({
-			type: "GET_COMPANY",
-			payload: [data],
-		});
 	};
 
-	//const data = { companyData: state.companyData, isError, postData, getCompany };
-	const data = { companyData: initialData, isError, postData, dataCompany };
+	const data = { isError, postData, getCompany };
 	return <CompanyContext.Provider value={data}>{children}</CompanyContext.Provider>;
 };
 
