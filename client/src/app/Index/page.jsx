@@ -1,4 +1,4 @@
-import Backdrop from "@/components/Backdrop/page";
+import { Backdrop } from "@/components/Backdrop/page";
 const IndexPage = () => {
 	return (
 		<>

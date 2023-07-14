@@ -12,6 +12,7 @@ module.exports = {
 			padding: "2rem",
 			screens: {
 				"2xl": "1536px",
+				"3xl": "1600px",
 			},
 		},
 		extend: {
@@ -20,12 +21,10 @@ module.exports = {
 					DEFAULT: "var(--aside-background)",
 					foreground: "var(--aside-foreground)",
 					hover: "var(--aside-hover)",
-
 				},
 				border: "hsl(var(--border))",
 				input: "hsl(var(--input))",
 				ring: "hsl(var(--ring))",
-				primary: "var(--primary)",
 				background: "var(--background)",
 				foreground: "var(--foreground)",
 				primary: {

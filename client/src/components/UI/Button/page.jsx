@@ -4,20 +4,8 @@ import { cn } from "@/lib/utils";
 const defaultPrimary = "bg-primary text-primary-foreground hover:bg-primary-hover hover:text-secondary";
 const defaultSecondary = "bg-secondary text-black hover:bg-secondary-hover hover:text-primary";
 const defaultCLass = "font-semibold py-2 px-4 rounded inline-flex items-center transition duration-300";
-// const Button = ({ text, className, loader, onClick, type }) => (
-// 	<button
-// 		className={`font-semibold py-2 px-4 rounded inline-flex items-center transition duration-300 ${
-// 			className ? className : defaultPrimary
-// 		}`}
-// 		onClick={onClick ?? onClick}
-// 		type={type}
-// 	>
-// 		{loader ?? loader}
-// 		<span className="mx-2">{text}</span>
-// 	</button>
-// );
 
-const buttonVAriants = cva(defaultCLass, {
+const buttonVariants = cva(defaultCLass, {
 	variants: {
 		intent: {
 			primary: defaultPrimary,
@@ -34,10 +22,10 @@ const buttonVAriants = cva(defaultCLass, {
 	},
 });
 
-const Button = ({ intent, size, className, loader, onClick, type, ...props }) => {
+export const ButtonComponent = ({ intent, size, className, loader, onClick, type, ...props }) => {
 	return (
 		<button
-			className={cn(buttonVAriants({ intent, size, className }))}
+			className={cn(buttonVariants({ intent, size, className }))}
 			onClick={onClick ?? onClick}
 			type={type}
 			{...props}
@@ -48,4 +36,4 @@ const Button = ({ intent, size, className, loader, onClick, type, ...props }) =>
 	);
 };
 
-export default Button;
+export default ButtonComponent;

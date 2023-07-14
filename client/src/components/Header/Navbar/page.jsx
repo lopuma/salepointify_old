@@ -27,7 +27,7 @@ const Navbar = () => {
 			<ul
 				className={`${
 					showNav ? "bg-aside absolute top-[80px] left-0 h-screen w-9/12 " : "hidden"
-				} sm:flex gap-4 sm:w-[438px] sm:h-full px-2 items-center place-content-end rounded-md`}
+				} md:flex gap-4 sm:w-[438px] sm:h-full px-2 items-center place-content-end rounded-md`}
 			>
 				{routes.map((route) => (
 					<ItemsNavbar key={route.href} {...route} />

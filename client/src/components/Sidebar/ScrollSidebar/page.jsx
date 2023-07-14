@@ -20,8 +20,8 @@ const ScrollSidebar = () => {
 	const asideRef = useRef(null);
 	const { show } = useSidebar();
 	const { companyData } = useCompany();
+	const [companyName, setCompanyName] = useState("");
 	const pathname = usePathname();
-	let companyName = "";
 	const routes = [
 		{
 			label: "Company",
@@ -56,12 +56,12 @@ const ScrollSidebar = () => {
 			active: pathname === "/settings/products",
 		},
 	];
-	try {
-		// if (companyData[0].companyName) {
-		// 	companyName = companyData[0].companyName;
-		// }
-		companyName = "";
-	} catch (e) {}
+
+	useEffect(() => {
+		if (companyData && companyData.companyName) {
+			setCompanyName(companyData.companyName);
+		}
+	}, [companyData]);
 
 	useEffect(() => {
 		const asideElement = asideRef.current;
@@ -88,25 +88,23 @@ const ScrollSidebar = () => {
 	return (
 		<aside
 			ref={asideRef}
-			className={`
-                fixed md:block z-10
-                ${show ? "w-[295px]" : "w-[85px]"}
-                p-4 py-6 duration-300 h-screen bg-aside overflow-y-auto overflow-x-hidden sm:h-[calc(100vh-140px)] docs-scrollbar styled-scrollbar rounded-sm hidden
-            `}
+			className={`fixed md:block z-10 ${
+				show ? "w-[295px]" : "w-[85px]"
+			} p-4 py-6 duration-300 h-screen bg-aside overflow-y-auto overflow-x-hidden sm:h-[calc(100vh-140px)] docs-scrollbar styled-scrollbar rounded-sm hidden`}
 			style={{ width: hasOverflow }}
 		>
-			<a href="/" className="hidden md:flex gap-x-4 items-center my-3">
+			<a href="#" className="hidden md:flex gap-x-4 items-center my-3">
 				<img
 					src={logo.src}
 					className={`
-                        ml-2 cursor-pointer duration-500 
+                        ml-2 cursor-pointer duration-500
                         ${show && "rotate-[360deg]"}
                     `}
 					alt={companyName}
 				/>
 				<h2
 					className={`
-                    text-aside-foreground origin-left font-medium text-xl duration-200 
+                    text-aside-foreground origin-left font-medium text-xl duration-200
                     ${!show && "scale-0"}
                 `}
 				>

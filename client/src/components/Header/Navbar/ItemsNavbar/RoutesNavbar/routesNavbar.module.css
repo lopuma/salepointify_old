@@ -1,8 +1,0 @@
-@font-face {
-	font-family: "Gilroy";
-	src: local("Gilroy"), url("../../../../../assets/fonts/gilroy/Gilroy-Light.otf") format("otf");
-}
-
-.routes {
-	font-family: "Gilroy", sans-serif;
-}

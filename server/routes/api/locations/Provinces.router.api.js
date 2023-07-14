@@ -9,6 +9,7 @@ const getProvinces = async (req, res) => {
 	try {
 		const data = await fs.readFile(provincesFile, "utf-8");
 		const provinces = JSON.parse(data);
+		console.log("provinces ==> ");
 		res.status(200).json(provinces);
 	} catch (error) {
 		console.error(error);

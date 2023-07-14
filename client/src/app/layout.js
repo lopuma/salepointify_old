@@ -16,7 +16,7 @@ export default function RootLayout({ children }) {
 				<CompanyProvider>
 					<HeaderProvider>
 						<Header />
-						<main className="container max-w-screen-2xl w-full px-2 pt-8 bg-background text-foreground">
+						<main className="bg-amber-400 container max-w-screen-2xl w-full px-2 pt-8 bg-background text-foreground">
 							{children}
 						</main>
 						<Footer />

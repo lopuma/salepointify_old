@@ -1,8 +1,8 @@
 import { useContext } from "react";
 import FormsContext from "../context/Forms/FormsContext";
 
-const useForms = () => {
+const useForm = () => {
 	return useContext(FormsContext);
 };
 
-export default useForms;
+export default useForm;

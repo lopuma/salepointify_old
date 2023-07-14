@@ -1,13 +1,14 @@
 import express, { json } from "express";
 import morgan from "morgan";
 import { ready, warn } from "./utils.js";
-import { PORT as _PORT } from "./config.js";
+import { PORT as _PORT, HOST as _HOST } from "./config.js";
 import cors from "cors";
 import configCors from "./configCors.js";
 import routerCompany from "./routes/api/company/Company.router.api.js";
 import routerProvinces from "./routes/api/locations/Provinces.router.api.js";
 import routerPopulations from "./routes/api/locations/Populations.router.api.js";
 const PORT = _PORT;
+const HOST = _HOST;
 
 const app = express();
 
@@ -26,28 +27,18 @@ app.use("/api/company", routerCompany);
 app.use("/api/locations/provinces", routerProvinces);
 app.use("/api/locations/populations", routerPopulations);
 
-app.post("/api", (req, res) => {
-	const { firstName, lastName, companyName } = req.body;
-	console.log({ firstName, lastName, companyName });
-	res.status(201).json({
-		success: true,
-		message: "Update Company name",
-	});
-});
-
 app.use((req, res) => {
 	res.status(404).json({
 		error: "Not found",
 	});
 });
 
-function startServer(port) {
+function startServer(port, host) {
 	app
 		.listen(port, () => {
-			const host = "0.0.0.0";
-			const appUrl = `http://localhost:${port}`;
+			const appUrl = `http://${host}:${port}`;
 
-			ready(` started server on ${host}:${port}, url: ${appUrl}`);
+			ready(` started server on [::]:${port}, url: ${appUrl}`);
 		})
 		.on("error", (err) => {
 			if (err.code === "EADDRINUSE") {
@@ -59,4 +50,4 @@ function startServer(port) {
 		});
 }
 
-startServer(PORT);
+startServer(PORT, HOST);

@@ -1,11 +1,7 @@
 import Link from "next/link";
-import useHeader from "@/app/hooks/useHeader";
 import { IoSettings } from "react-icons/io5";
-import styles from "./routesNavbar.module.css";
 
-const RoutesNavbar = ({ href, label, icon, hiddenMenuBackdrop, active }) => {
-	const { showNav } = useHeader();
-
+const RoutesNavbar = ({ href, label, icon, hiddenMenuBackdrop }) => {
 	const handleHiddenNav = () => {
 		setTimeout(() => {
 			hiddenMenuBackdrop();
@@ -21,9 +17,7 @@ const RoutesNavbar = ({ href, label, icon, hiddenMenuBackdrop, active }) => {
 			{icon ? (
 				<IoSettings style={{ fontSize: "20px" }} />
 			) : (
-				<label className={`${styles.routes} cursor-pointer whitespace-nowrap text-[18px] sm:text-[16px]				`}>
-					{label}
-				</label>
+				<label className={`cursor-pointer whitespace-nowrap text-[18px] sm:text-[16px]				`}>{label}</label>
 			)}
 		</Link>
 	);
