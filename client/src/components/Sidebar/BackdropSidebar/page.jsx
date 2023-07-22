@@ -1,12 +1,12 @@
-import useSidebar from "@/app/hooks/useSidebar";
-
-const BackdropSidebar = () => {
-	const { show } = useSidebar();
+"use client";
+import { useToggleAside } from "@/app/store/useToggleAside";
+export default function BackdropSidebar() {
+	const { showAside } = useToggleAside();
 	return (
 		<div
-			className={`hidden md:flex ${show ? "md:w-[310px]" : "md:w-[100px]"} duration-200 md:h-[100vh] bg-none pb-20`}
+			className={`bg-background transition-all duration-300 ease-in px-4 pb-20 ${
+				showAside ? "w-[310px]" : "w-[110px]"
+			}`}
 		></div>
 	);
-};
-
-export default BackdropSidebar;
+}

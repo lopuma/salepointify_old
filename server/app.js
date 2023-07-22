@@ -37,7 +37,6 @@ function startServer(port, host) {
 	app
 		.listen(port, () => {
 			const appUrl = `http://${host}:${port}`;
-
 			ready(` started server on [::]:${port}, url: ${appUrl}`);
 		})
 		.on("error", (err) => {

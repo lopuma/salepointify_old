@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { getLocations } from "@/app/services/fetchDataLocations";
 import { LabelComponent } from "../UI/Label/page";
 import { FormField } from "../UI/Form/page";
@@ -6,6 +5,7 @@ import { InputComponent } from "../UI/Input/page";
 import { SelectComponent } from "../UI/Select/page";
 import useField from "@/app/hooks/useField";
 import useForm from "@/app/hooks/useForm";
+import { useQuery } from "react-query";
 const apiDataProvinces = getLocations("locations/provinces");
 
 const colors = {
@@ -13,10 +13,9 @@ const colors = {
 };
 
 export const SelectProvinces = ({ name, editMode, value, onChange }) => {
-	const [dataProvinces, setDataProvinces] = useState(apiDataProvinces.read());
-
+	const { data: dataProvinces } = useQuery("dataProvinces", () => apiDataProvinces.read());
 	return (
-		<FormField columns={"33%"} className={"px-0 pr-3"}>
+		<FormField columns={"33%"} className={"px-0 md:pr-3"}>
 			<LabelComponent htmlFor={name}>State / Provinces</LabelComponent>
 			<div className="relative">
 				<select
@@ -31,7 +30,7 @@ export const SelectProvinces = ({ name, editMode, value, onChange }) => {
 				>
 					{dataProvinces?.map(({ label, code }) => {
 						return (
-							<option key={code} value={code}>
+							<option key={label} value={code}>
 								{label}
 							</option>
 						);
@@ -50,14 +49,14 @@ export const SelectProvinces = ({ name, editMode, value, onChange }) => {
 export const SelectPopulation = ({ name, editMode, value, onChange, disabled }) => {
 	const { selectedPopulation } = useForm();
 	return (
-		<FormField columns="33%">
+		<FormField columns="33%" className={"px-0"}>
 			<LabelComponent htmlFor={"population"}>Populations</LabelComponent>
 			<div className="relative">
 				<SelectComponent name={name} editMode={editMode} onChange={onChange} disabled={disabled} value={value}>
 					{disabled ? (
-						selectedPopulation?.map(({ label }, index) => {
+						selectedPopulation?.map(({ label }) => {
 							return (
-								<option key={index} value={label}>
+								<option key={label} value={label}>
 									{label}
 								</option>
 							);
@@ -84,7 +83,7 @@ export const Zip = () => {
 		type: "number",
 	});
 	return (
-		<FormField columns="33%" className={"px-0 pl-3"}>
+		<FormField columns="33%" className={"px-0 md:pl-3"}>
 			<LabelComponent htmlFor={"zip_code"}>Zip</LabelComponent>
 			<InputComponent {...zip}></InputComponent>
 		</FormField>

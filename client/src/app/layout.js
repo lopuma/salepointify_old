@@ -1,11 +1,14 @@
+"use client";
+import "./normalize.css";
 import "./globals.css";
 import Header from "@/components/Header/page";
 import Footer from "@/components/Footer/page";
 import CompanyProvider from "./context/Company/CompanyState";
-import HeaderProvider from "./context/Header/HeaderState";
-
+import Backdrop from "@/components/Backdrop/page";
+import { QueryClient, QueryClientProvider } from "react-query";
+const queryClient = new QueryClient();
 export const metadata = {
-	title: "Sale Pointify",
+	title: "Point of Sale",
 	description: "E-Commerce Sale Pointify",
 };
 
@@ -13,15 +16,14 @@ export default function RootLayout({ children }) {
 	return (
 		<html lang="en" className="">
 			<body className="bg-background">
-				<CompanyProvider>
-					<HeaderProvider>
+				<QueryClientProvider client={queryClient}>
+					<CompanyProvider>
 						<Header />
-						<main className="bg-amber-400 container max-w-screen-2xl w-full px-2 pt-8 bg-background text-foreground">
-							{children}
-						</main>
+						<main>{children}</main>
+						<Backdrop />
 						<Footer />
-					</HeaderProvider>
-				</CompanyProvider>
+					</CompanyProvider>
+				</QueryClientProvider>
 			</body>
 		</html>
 	);

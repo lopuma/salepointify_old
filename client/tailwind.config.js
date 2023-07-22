@@ -6,6 +6,7 @@ module.exports = {
 		"./src/components/**/*.{js,ts,jsx,tsx,mdx}",
 		"./src/app/**/*.{js,ts,jsx,tsx,mdx}",
 	],
+
 	theme: {
 		container: {
 			center: true,
@@ -16,6 +17,9 @@ module.exports = {
 			},
 		},
 		extend: {
+			gridTemplateColumns: {
+				fluid: "repeat(auto-fit, minmax(15rem, 1fr))",
+			},
 			colors: {
 				aside: {
 					DEFAULT: "var(--aside-background)",
@@ -27,6 +31,10 @@ module.exports = {
 				ring: "hsl(var(--ring))",
 				background: "var(--background)",
 				foreground: "var(--foreground)",
+				header: {
+					DEFAULT: "var(--header-bg)",
+					foreground: "var(--header-fg)",
+				},
 				primary: {
 					DEFAULT: "var(--primary)",
 					foreground: "var(--primary-foreground)",
@@ -61,6 +69,46 @@ module.exports = {
 					DEFAULT: "hsl(var(--card))",
 					foreground: "hsl(var(--card-foreground))",
 				},
+				selected: {
+					DEFAULT: "var(--selected)",
+					foreground: "var(--selected-foreground)",
+				},
+			},
+			fontFamily: {
+				body: [
+					"Noto Sans",
+					"ui-sans-serif",
+					"system-ui",
+					"-apple-system",
+					"system-ui",
+					"Segoe UI",
+					"Roboto",
+					"Helvetica Neue",
+					"Arial",
+					"Noto Sans",
+					"sans-serif",
+					"Apple Color Emoji",
+					"Segoe UI Emoji",
+					"Segoe UI Symbol",
+					"Noto Color Emoji",
+				],
+				sans: [
+					"Noto Sans",
+					"ui-sans-serif",
+					"system-ui",
+					"-apple-system",
+					"system-ui",
+					"Segoe UI",
+					"Roboto",
+					"Helvetica Neue",
+					"Arial",
+					"Noto Sans",
+					"sans-serif",
+					"Apple Color Emoji",
+					"Segoe UI Emoji",
+					"Segoe UI Symbol",
+					"Noto Color Emoji",
+				],
 			},
 		},
 	},

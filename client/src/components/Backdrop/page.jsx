@@ -1,17 +1,17 @@
 "use client";
-import useHeader from "@/app/hooks/useHeader";
+import { useToggleNav } from "@/app/store/useToggleNav";
 
-export const Backdrop = () => {
-	const { showBackdrop, hiddenMenuBackdrop } = useHeader();
+export default function Backdrop() {
+	const { showNav, onClick } = useToggleNav();
+
 	return (
 		<>
-			{showBackdrop && (
+			{showNav && (
 				<div
-					className="fixed top-[80px] inset-0 z-10 bg-gray-900/50 dark:bg-gray-900/60 h-screen"
-					id="sidebarBackdrop"
-					onClick={hiddenMenuBackdrop}
+					className="fixed top-[80px] inset-0 z-0 bg-gray-900/50 dark:bg-gray-900/60 h-screen"
+					onClick={onClick}
 				></div>
 			)}
 		</>
 	);
-};
+}

@@ -36,12 +36,18 @@ body,
 		--background-start-rgb: 214, 219, 220;
 		--background-end-rgb: 255, 255, 255;
 		--ring: 217.2 32.6% 17.5%;
-		--background: #ffff;
-		--foreground: #000000;
-		--aside-background: #0D1930;
-		--aside-foreground: #B3EFFF;
-		--aside-hover: #DDEFF6;
+		--background: #fff;
+		--foreground: #323130;
+		--aside-background: #fff;
+		--aside-foreground: #323130;
+		--aside-hover: #edebe9;
+		--mainColorLight: #5767aa;
+		--secondaryColor: #db2b39;
+		--header-bg: #484644;
+		--header-fg: #e3e3e3;
 
+		--selected: #4fc0d0;
+		--selected-foreground: #164b60;
 		--never: #e76161;
 		--never-foreground: #d60909;
 
@@ -57,13 +63,13 @@ body,
 		--border: 214.3 31.8% 91.4%;
 		--input: 214.3 31.8% 91.4%;
 
-		--primary: #FF5153;
-		--primary-hover: #DB3B4B;
-		--primary-foreground: #94FFB1;
+		--primary: #ff5153;
+		--primary-hover: #db3b4b;
+		--primary-foreground: #94ffb1;
 
 		--secondary: #f2f2f2;
 		--secondary-hover: #e5e5e5;
-		--secondary-foreground: #FF5153;
+		--secondary-foreground: #ff5153;
 
 		--accent: 210 40% 96.1%;
 		--accent-foreground: ;
@@ -97,7 +103,7 @@ body,
 		--border: 217.2 32.6% 17.5%;
 		--input: 217.2 32.6% 17.5%;
 
-        --accent: 217.2 32.6% 17.5%;
+		--accent: 217.2 32.6% 17.5%;
 		--accent-foreground: ;
 
 		--destructive: 0 62.8% 30.6%;
@@ -106,4 +112,3 @@ body,
 		--ring: 217.2 30% 22%;
 	}
 }
-

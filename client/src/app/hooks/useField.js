@@ -9,8 +9,8 @@ function useField({ name, type, placeholder, ...props }) {
 	return {
 		id: name,
 		placeholder: placeholder || name,
-		name,
-		type,
+		name: name,
+		type: type,
 		editMode: editMode,
 		value: formData[name],
 		errorState: errorState?.name,

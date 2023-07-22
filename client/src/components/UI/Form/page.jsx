@@ -2,33 +2,34 @@ import { cn } from "@/lib/utils";
 import { cva } from "class-variance-authority";
 
 /**
- * Componente Form.
+ * Form component.
  *
- * @param {Object} props - Propiedades del componente.
- * @param {React.ReactNode} props.children - Elementos hijos del componente, pueden ser [FormContainer].
- * @param {string} props.className - Clases CSS adicionales para el componente.
- * @returns {React.JSX.Element} Componente Form.
+ * @component
+ * @param {React.ReactNode} children - Child elements of the component, can be [FormContainer].
+ * @param {function} onSubmit - Event handler function for the onSubmit event.
+ * @param {string} [className] - Additional CSS classes for the component (optional).
+ * @returns {React.ReactElement} Form component.
  */
 export const Form = ({ children, onSubmit, className }) => {
+	const defaultClassName = "w-full md:max-w-4xl";
 	return (
-		<form onSubmit={onSubmit} className={cn(className)}>
+		<form onSubmit={onSubmit} className={cn(defaultClassName, className)}>
 			{children}
 		</form>
 	);
 };
 
 /**
- * Componente FormContainer.
+ * FormContainer component.
  *
- * @param {Object} props - Propiedades del componente.
- * @param {React.ReactNode} props.children - Elementos hijos del componente, pueden ser [FormGroup].
- * @param {string} props.className - Clases CSS adicionales para el componente.
- * @returns {React.JSX.Element} Componente FormContainer.
+ * @param {Object} props - Component properties.
+ * @param {React.ReactNode} children - Child elements of the component, can be [FormGroup].
+ * @param {string} className - Additional CSS classes for the component.
+ * @returns {React.ReactElement} FormContainer component.
  */
-
 const FormContainer = ({ children, className, ...props }) => {
 	const defaultClassName =
-		"container shadow-sm shadow-slate-200 rounded-sm border border-gray-200 p-6 sm:max-w-4xl dark:border-slate-700 dark:shadow-slate-700 dark:bg-gray-900";
+		"w-full shadow-sm shadow-slate-200 rounded-sm border border-gray-200 p-6 dark:border-slate-700 dark:shadow-slate-700 dark:bg-gray-900";
 	return (
 		<div className={cn(defaultClassName, className)} {...props}>
 			{children}
@@ -37,15 +38,15 @@ const FormContainer = ({ children, className, ...props }) => {
 };
 
 /**
- * Componente FormGroup.
+ * FormGroup component.
  *
- * @param {Object} props - Propiedades del componente.
- * @param {React.ReactNode} props.children - Elementos hijos del componente, pueden ser [FormField].
- * @param {string} props.className - Clases CSS adicionales para el componente.
- * @returns {React.JSX.Element} Componente FormGroup.
+ * @param {Object} props - Component properties.
+ * @param {React.ReactNode} children - Child elements of the component, can be [FormField].
+ * @param {string} className - Additional CSS classes for the component.
+ * @returns {React.ReactElement} FormGroup component.
  */
 const FormGroup = ({ children, className, ...props }) => {
-	const defaultClassName = "flex items-center flex-col md:flex-row gap-4 md:gap-1 py-2 -mx-3 mb-3";
+	const defaultClassName = "flex items-center flex-col md:flex-row gap-4 md:gap-1 -mx-3 mb-3 md:mb-0";
 	return (
 		<div className={cn(defaultClassName, className)} {...props}>
 			{children}
@@ -53,18 +54,9 @@ const FormGroup = ({ children, className, ...props }) => {
 	);
 };
 
-/**
- * Componente FormField.
- *
- * @param {Object} props - Propiedades del componente.
- * @param {React.ReactNode} props.children - Elementos hijos del componente, pueden ser [Label, Input, ErrorComponent].
- * @param {string} props.columns - Clases de las columnas. Pueden ser valores como "md:50%" o "lg:33% xl:25%", esto  te divide los field en columnas por un % dentro de un FormGroup.
- * @param {string} props.className - Clases CSS adicionales para el componente.
- * @returns {React.JSX.Element} Componente FormField.
- */
-const fieldVariants = cva("w-full py-2 px-3", {
+const fieldVariants = cva("w-full md:min-h-[100px] md:h-auto px-3 my-2 md:my-0", {
 	variants: {
-		columns: {
+		cols: {
 			"100%": "md:w-full",
 			"50%": "md:w-1/2",
 			"33%": "md:w-1/3",
@@ -72,13 +64,26 @@ const fieldVariants = cva("w-full py-2 px-3", {
 		},
 	},
 	defaultVariant: {
-		columns: "100%",
+		cols: "100%",
 	},
 });
 
-const FormField = ({ children, columns, className, ...props }) => {
+/**
+ * FormField component.
+ *
+ * @param {Object} props - Component properties.
+ * @param {React.ReactNode} children - Child elements of the component, can be [Label, Input, ErrorComponent].
+ * @param {string} cols - Column classes. Values can be "100%", "50%", "33%", or "66%" to define the width of the field within a FormGroup.
+ *    - "100%": Full width of the container.
+ *    - "50%": Half width of the container.
+ *    - "33%": One-third width of the container.
+ *    - "66%": Two-thirds width of the container.
+ * @param {string} className - Additional CSS classes for the component.
+ * @returns {React.ReactElement} FormField component.
+ */
+const FormField = ({ children, cols, className, ...props }) => {
 	return (
-		<div className={cn(fieldVariants({ columns, className }))} {...props}>
+		<div className={cn(fieldVariants({ cols, className }))} {...props}>
 			{children}
 		</div>
 	);

@@ -1,11 +1,12 @@
-import useCompany from "@/app/hooks/useCompany";
+"use client";
+import { useCompanyName } from "@/app/store/useCompanyName";
 import logo from "@/assets/logo.svg";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { CiSettings } from "react-icons/ci";
 import { AiOutlineDashboard, AiOutlineUser, AiOutlineUnorderedList, AiOutlineUsergroupAdd } from "react-icons/ai";
-import useSidebar from "@/app/hooks/useSidebar";
 import ItemsSidebar from "./ItemsSidebar/page";
 import { usePathname } from "next/navigation";
+import { useToggleAside } from "@/app/store/useToggleAside";
 
 const iconMap = {
 	AiOutlineDashboard,
@@ -16,15 +17,16 @@ const iconMap = {
 };
 
 const ScrollSidebar = () => {
-	const [hasOverflow, setHasOverflow] = useState("85px");
-	const asideRef = useRef(null);
-	const { show } = useSidebar();
-	const { companyData } = useCompany();
-	const [companyName, setCompanyName] = useState("");
+	const widthShow = "w-[300px]";
+	const widthHide = "w-[100px]";
 	const pathname = usePathname();
+	const [hasOverflow, setHasOverflow] = useState(widthHide);
+	const asideRef = useRef(null);
+	const { companyName } = useCompanyName();
+	const { showAside } = useToggleAside();
 	const routes = [
 		{
-			label: "Company",
+			label: "Bussines Profile",
 			icon: "CiSettings",
 			href: "/settings/company",
 			active: pathname === "/settings/company",
@@ -56,56 +58,70 @@ const ScrollSidebar = () => {
 			active: pathname === "/settings/products",
 		},
 	];
+	const handleShowAside = () => {
+		console.log({ showAside, hasOverflow });
+		setHasOverflow(widthShow);
+	};
+	// try {
+	// 	const asideElement = asideRef.current;
+	// 	const { width } = asideElement.getBoundingClientRect();
+	// 	console.log({ width });
+	// 	const newWidth = width + 15;
+	// 	setHasOverflow(`${newWidth}px`);
+	// } catch (error) {}
+	// useEffect(() => {
+	// 	const handleResize = () => {
+	// 		const asideElement = asideRef.current;
+	// 		const { width } = asideElement.getBoundingClientRect();
+	// 		const newWidth = Math.min(width + 10, 96.1094);
+	// 		setHasOverflow(`${newWidth}px`);
+	// 	};
+	// 	window.addEventListener("resize", handleResize);
+	// 	return () => window.removeEventListener("resize", handleResize);
+	// }, []);
+	// useEffect(() => {
+	// 	const asideElement = asideRef.current;
+	// 	if (!asideElement) return;
 
-	useEffect(() => {
-		if (companyData && companyData.companyName) {
-			setCompanyName(companyData.companyName);
-		}
-	}, [companyData]);
+	// 	const handleScroll = () => {
+	// 		const { width } = asideElement.getBoundingClientRect();
+	// 		console.log({ width });
+	// 		if (width <= 100) {
+	// 			const newWidth = Math.min(width + 15, 95.890625);
+	// 			setHasOverflow(`${newWidth}px`);
+	// 		}
+	// 	};
+	// 	asideElement.addEventListener("scroll", handleScroll);
+	// 	return () => {
+	// 		asideElement.removeEventListener("scroll", handleScroll);
+	// 	};
+	// }, []);
 
-	useEffect(() => {
-		const asideElement = asideRef.current;
-		if (!asideElement) return;
-
-		const handleScroll = () => {
-			const { width } = asideElement.getBoundingClientRect();
-			if (width <= 90) {
-				const newWidth = Math.min(width + 5, 90.1875);
-				setHasOverflow(`${newWidth}px`);
-			}
-		};
-		asideElement.addEventListener("scroll", handleScroll);
-		return () => {
-			asideElement.removeEventListener("scroll", handleScroll);
-		};
-	}, []);
-
-	useEffect(() => {
-		const newWidth = show ? "295px" : "85px";
-		setHasOverflow(newWidth);
-	}, [show]);
+	// useEffect(() => {
+	// 	const newWidth = showAside ? "300px" : "95px";
+	// 	setHasOverflow(newWidth);
+	// }, [showAside]);
 
 	return (
 		<aside
 			ref={asideRef}
-			className={`fixed md:block z-10 ${
-				show ? "w-[295px]" : "w-[85px]"
-			} p-4 py-6 duration-300 h-screen bg-aside overflow-y-auto overflow-x-hidden sm:h-[calc(100vh-140px)] docs-scrollbar styled-scrollbar rounded-sm hidden`}
-			style={{ width: hasOverflow }}
+			className={`fixed md:block z-10 p-4 py-6 transition-all	 duration-300 ease-linear h-screen bg-aside overflow-y-auto overflow-x-hidden sm:h-[calc(100vh-140px)] docs-scrollbar styled-scrollbar rounded-sm border-r border-t hidden ${
+				showAside ? widthShow : widthHide
+			}`}
 		>
 			<a href="#" className="hidden md:flex gap-x-4 items-center my-3">
 				<img
 					src={logo.src}
 					className={`
                         ml-2 cursor-pointer duration-500
-                        ${show && "rotate-[360deg]"}
+                        ${showAside && "rotate-[360deg]"}
                     `}
 					alt={companyName}
 				/>
 				<h2
 					className={`
                     text-aside-foreground origin-left font-medium text-xl duration-200
-                    ${!show && "scale-0"}
+                    ${!showAside && "scale-0"}
                 `}
 				>
 					{companyName ? companyName : "NAME_COMPANY"}
